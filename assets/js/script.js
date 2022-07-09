@@ -8,6 +8,7 @@ var fiveDayForecast = $('.5day-forecast');
 var previousCityContainer = $('.city-list');
 var textInput = document.querySelector('.input');
 
+// fetches weather data from current day
 function getWeatherToday() {
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`;
     fetch(requestURL)
@@ -20,6 +21,7 @@ function getWeatherToday() {
         }
     )}
 
+// displays fetched weather data from current day into weather-display class
 function displayWeather(data) {
     $('.city-name').text(data.name);
     $('.date').text(date);
@@ -31,6 +33,7 @@ function displayWeather(data) {
     var longitude = data.coord.lon;
     var latitude = data.coord.lat;
 
+    // fetching to get UV index data
     var uvIndexURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,daily,minutely&appid=${key}`;
     fetch(uvIndexURL)
         .then(function(response) {
@@ -42,6 +45,7 @@ function displayWeather(data) {
         })
 }
 
+// displays fetched UV index data to display with colours corresponding to conditions of UV index
 function uvIndexDisplay(data) {
     $('#UV').text('UV Index: ');
     var uvIndexSpan = $('<span>')
@@ -58,6 +62,7 @@ function uvIndexDisplay(data) {
     getFiveDayForecast();
 }
 
+// fetches five day forecast data
 function getFiveDayForecast() {
     var FiveDayURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${key}`;
 
@@ -71,6 +76,7 @@ function getFiveDayForecast() {
         })
 }
 
+// displays fetched five day forecast data into separate cards for each day
 function displayFiveDayForecast(data) {
     var dayOne = data.list[0];
     var dayTwo = data.list[7];
@@ -112,6 +118,7 @@ function displayFiveDayForecast(data) {
 
 var previousCitySearch = [];
 
+// eventlistener for click on the search button to run a function that pushes the search into an array for local storage
 $('.search').on('click', function(event){
     event.preventDefault();
     city = $(this).siblings('.input').val().trim();
@@ -126,6 +133,7 @@ $('.search').on('click', function(event){
     textInput.value = '';
 })
 
+// creates buttons based off previous city searches and adds an event listener so when button is clicked, the specific cities weather is again displayed
 function previousCities() {
     previousCityContainer.empty();
     for(i=0; i<previousCitySearch.length; i++){
@@ -142,6 +150,7 @@ function previousCities() {
     });
 }
 
+// function for when the page is loaded to load local storage if there is content in the previousCitySearch array
 function preload() {
     var cityStorage = JSON.parse(localStorage.getItem('city'));
     if (cityStorage !== null){
@@ -153,6 +162,7 @@ function preload() {
 
 preload();
 
+// function to clear past city searches and local storage when the clear button is clicked  
 function clearHistory(event) {
     event.preventDefault();
     $('.city-list').empty();
