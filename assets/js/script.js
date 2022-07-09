@@ -6,6 +6,7 @@ var city = "Sydney";
 var key = "d332c011d69ce2ab0548271b8a1515d6";
 var fiveDayForecast = $('.5day-forecast');
 var previousCityContainer = $('.city-list');
+var textInput = document.querySelector('.input');
 
 function getWeatherToday() {
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`;
@@ -113,7 +114,6 @@ var previousCitySearch = [];
 
 $('.search').on('click', function(event){
     event.preventDefault();
-    $('.input').text('');
     city = $(this).siblings('.input').val().trim();
     if(city===''){
         return;
@@ -123,6 +123,7 @@ $('.search').on('click', function(event){
     fiveDayForecast.empty();
     previousCities();
     getWeatherToday();
+    textInput.value = '';
 })
 
 function previousCities() {
