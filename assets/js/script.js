@@ -1,5 +1,5 @@
 
-var date = moment().format("dddd, MMMM, Do, YYYY");
+var date = moment().format("DD/MM/YYYY");
 var dateTime = moment().format("YYYY-MM-DD HH:MM:SS");
 var cardInfo = $('.today-info');
 var city = "Sydney";
@@ -51,9 +51,9 @@ function uvIndexDisplay(data) {
         uvIndexSpan.attr('class', 'favourable');
     } else if (data.current.uvi > 3 && data.current.uvi <= 6) {
         uvIndexSpan.attr('class', 'moderate');
-    } else (data.current.uvi > 6 && data.current.uvi <= 9) 
+    } else {
         uvIndexSpan.attr('class', 'severe');
-    
+    } 
     getFiveDayForecast();
 }
 
@@ -82,10 +82,10 @@ function displayFiveDayForecast(data) {
         fiveDayDiv.attr('class', 'col-md-3 card')
         fiveDayForecast.append(fiveDayDiv);
 
-        var fiveDayDivHeader = $('<h1>');
+        var fiveDayDivHeader = $('<h3>');
         fiveDayDivHeader.attr('class', 'five-day-header');
         date = forecast.dt_txt.split(' ')[0]
-        fiveDayDivHeader.text(moment(date).format('DD-MM-YYYY'));
+        fiveDayDivHeader.text(moment(date).format('DD/MM/YYYY'));
         fiveDayDiv.append(fiveDayDivHeader);
 
         var fiveDayDivBody = $('<div>');
@@ -126,7 +126,7 @@ function previousCities() {
     previousCityContainer.empty();
     for(i=0; i<previousCitySearch.length; i++){
         var citybtn = $('<button>').text(previousCitySearch[i]);
-        citybtn.attr('class', 'btn btn-info searchbtn')
+        citybtn.attr('class', 'btn btn-info searchbtn');
         previousCityContainer.append(citybtn);
     }
 
@@ -148,3 +148,11 @@ function preload() {
 }
 
 preload();
+
+function clearHistory(event) {
+    event.preventDefault();
+    $('.city-list').empty();
+    localStorage.clear();
+}
+
+$('.clear').on('click', clearHistory);
