@@ -129,7 +129,7 @@ function previousCities() {
     previousCityContainer.empty();
     for(i=0; i<previousCitySearch.length; i++){
         var citybtn = $('<button>').text(previousCitySearch[i]);
-        citybtn.attr('class', 'searchbtn')
+        citybtn.attr('class', 'btn btn-info')
         previousCityContainer.append(citybtn);
     }
 
