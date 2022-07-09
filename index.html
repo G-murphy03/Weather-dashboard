@@ -15,28 +15,33 @@
         <header class="text-center">
             <h1>Weather Dashboard</h1>
         </header>
-        <div class="row">
-            <div class="city-search col-md-3">
-                <h2>Search for a city:</h2>
-                <input type="text" style="width:100%">
-                <button type="button" class="btn btn-primary">Search</button>
-                <div class="city-list">
-
+        <main>
+            <div class="row">
+                <div class="city-search col-12 col-md-3 col-xl-3">
+                    <h2>Search for a city:</h2>
+                    <input type="text" class="input" style="width:100%">
+                    <button type="button" class="btn btn-primary search">Search</button>
+                    <div class="city-list">
+    
+                    </div>
+                </div>
+            
+                <div class="col-12 col-md-9 col-xl-9">
+                    <div class="weather-display col-12">
+                        <h2 class="city-name"></p>
+                        <h3 class="date"></h3>
+                        <img class="weather-icon">
+                        <div class="today-info">
+                            <p class="info" id="temperature"></p>
+                            <p class="info" id="wind"></p>
+                            <p class="info" id="humidity"></p>
+                            <p class="info" id="UV"></p>
+                        </div>
+                    </div>
+                    <div class="5day-forecast col-md-9 row"></div>
                 </div>
             </div>
-        
-            <div class="weather-display col-md-9">
-                <h2 class="city-name"></p>
-                <h3 class="date"></h3>
-                <div class="today-info">
-                    <p class="info" id="temperature"></p>
-                    <p class="info" id="wind"></p>
-                    <p class="info" id="humidity"></p>
-                    <p class="info" id="UV"></p>
-                </div>
-            </div>
-            <div class="5day-forecast col-md-9 row"></div>
-        </div>
+        </main>
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
