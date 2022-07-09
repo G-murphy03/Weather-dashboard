@@ -15,7 +15,6 @@ function getWeatherToday() {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    console.log(data);
                     displayWeather(data);
                 })
             }
@@ -38,7 +37,6 @@ function displayWeather(data) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    console.log(data);
                     uvIndexDisplay(data);
                 })
             }
@@ -81,7 +79,36 @@ function displayFiveDayForecast(data) {
     var dayFive = data.list[5];
     var fiveDayArray = [dayOne, dayTwo, dayThree, dayFour, dayFive];
     console.log(fiveDayArray);
+    fiveDayArray.forEach(function(forecast){
+        var fiveDayDiv = $('<div>');
+        fiveDayDiv.attr('class', 'col-md-2 card')
+        fiveDayForecast.append(fiveDayDiv);
 
+        var fiveDayDivHeader = $('<h1>');
+        fiveDayDivHeader.attr('class', 'five-day-header');
+        fiveDayDivHeader.text(forecast.dt_txt);
+        fiveDayDiv.append(fiveDayDivHeader);
+
+        var fiveDayDivBody = $('<div>');
+        fiveDayDivBody.attr('class', 'five-day-body');
+        fiveDayDiv.append(fiveDayDivBody);
+
+        var fiveDayDivIcon = $('<img>');
+        fiveDayDivIcon.attr('src', `https://openweathermap.org/img/wn/${forecast.weather[i].icon}@2x.png`);
+        fiveDayDivIcon.attr('class', 'weather-icon');
+        fiveDayDivBody.append(fiveDayDivIcon);
+
+
+        var tempText = $('<p>').text('Temperature: ' + forecast.main.temp + '°C');
+        fiveDayDivBody.append(tempText);
+
+        var windText = $('<p>').text('Wind: ' + forecast.wind.speed + ' KPH');
+        fiveDayDivBody.append(windText);
+
+        var humidityText = $('<p>').text('Humidity: ' + forecast.main.humidity + ' %');
+        fiveDayDivBody.append(humidityText);
+    });
+    /*
     for (var i=0; i < fiveDayArray.length; i++) {
         var fiveDayDiv = $('<div>');
         fiveDayDiv.attr('class', 'col-md-2 card')
@@ -101,6 +128,7 @@ function displayFiveDayForecast(data) {
         fiveDayDivIcon.attr('class', 'weather-icon');
         fiveDayDivBody.append(fiveDayDivIcon);
 
+        console.log(fiveDayArray);
         var tempText = $('<p>').text('Temperature: ' + fiveDayArray[i].main.temp + '°C');
         fiveDayDivBody.append(tempText);
 
@@ -110,6 +138,7 @@ function displayFiveDayForecast(data) {
         var humidityText = $('<p>').text('Humidity: ' + fiveDayArray[i].main.humidity + ' %');
         fiveDayDivBody.append(humidityText);
     }
+    */
 }
 
 previousCitySearch = [];
@@ -121,23 +150,24 @@ $('.search').on('click', function(event){
 
     localStorage.setItem('city', JSON.stringify(previousCitySearch));
     fiveDayForecast.empty();
-    getWeatherToday();
     previousCities();
+    getWeatherToday();
 })
 
 function previousCities() {
     previousCityContainer.empty();
     for(i=0; i<previousCitySearch.length; i++){
         var citybtn = $('<button>').text(previousCitySearch[i]);
-        citybtn.attr('class', 'btn btn-info')
+        citybtn.attr('class', 'btn btn-info searchbtn')
         previousCityContainer.append(citybtn);
     }
 
     $('.searchbtn').on('click', function(event){
         event.preventDefault();
         city = $(this).text();
+        fiveDayForecast.empty();
         getWeatherToday();
-    })
+    });
 }
 
 function preload() {
@@ -146,7 +176,6 @@ function preload() {
         previousCitySearch = cityStorage
     }
     previousCities();
-    getWeatherToday();
 }
 
 preload();
