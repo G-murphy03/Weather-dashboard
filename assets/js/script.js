@@ -109,13 +109,16 @@ function displayFiveDayForecast(data) {
     });
 }
 
-previousCitySearch = [];
+var previousCitySearch = [];
 
 $('.search').on('click', function(event){
     event.preventDefault();
+    $('.input').text('');
     city = $(this).siblings('.input').val().trim();
+    if(city===''){
+        return;
+    }
     previousCitySearch.push(city);
-
     localStorage.setItem('city', JSON.stringify(previousCitySearch));
     fiveDayForecast.empty();
     previousCities();
@@ -153,6 +156,8 @@ function clearHistory(event) {
     event.preventDefault();
     $('.city-list').empty();
     localStorage.clear();
+    previousCitySearch = []
+
 }
 
 $('.clear').on('click', clearHistory);
